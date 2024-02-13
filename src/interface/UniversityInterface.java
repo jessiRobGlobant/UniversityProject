@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 import model.University;
@@ -14,7 +15,6 @@ public class UniversityInterface {
         while (!option.equals("0")){
             System.out.println("\nMENU PRINCIPAL\n");
 
-            System.out.println("Seleccione la accion que desea realizar:");
             System.out.println("1. Ver profesores");
             System.out.println("2. Ver clases");
             System.out.println("3. Ver estudiantes");
@@ -23,15 +23,20 @@ public class UniversityInterface {
             System.out.println("6. Listar clases de un estudiante");
             System.out.println("0. Salir de la aplicacion");
 
+            System.out.println("\nSeleccione la accion que desea realizar:");
+
             option = scan.nextLine();
 
             if (isAnOption(option, "6")){
                 switch (Byte.parseByte(option)) {
                     case 1: 
+                        showProfessors();
                         break;
-                    case 2: 
+                    case 2:
+                        chooseClass();
                         break;
                     case 3: 
+                        showStudents();
                         break;
                     case 4: 
                         break;
@@ -44,7 +49,51 @@ public class UniversityInterface {
         }
     }
     
+    // Show info
+    public static void showProfessors(){
+        System.out.println("\nLISTADO DE PROFESORES\n");
+        List<Long> professorsIds = university.getTeachersIds();
+        short i = 0;
+        for (long id: professorsIds){
+            System.out.println(i);
+            System.out.println(university.getProfessorInfo(id));
+            System.out.println();
+            i ++;
+        }
+    }
 
+    public static void showStudents(){
+        System.out.println("\nLISTADO DE ESTUDIANTES\n");
+        List<Long> studentsIds = university.getStudentsIds();
+        short i = 0;
+        for (long id: studentsIds){
+            System.out.println(i);
+            System.out.println(university.getStudentInfo(id));
+            System.out.println();
+            i ++;
+        }
+    }
+
+    public static void chooseClass(){
+        System.out.println("\nLISTADO DE CLASES\n");
+
+        int i  = 0;
+        for (String name: university.getClassesNames()){
+            i ++;
+            System.out.println(String.format("%d. %s", i, name));
+        }
+        
+        if (!university.getClassesNames().isEmpty()){
+            System.out.println("Ingrese la clase de la que desea ver más informacion:");
+            String option = scan.nextLine();
+
+            if(isAnOption(option, String.valueOf(String.valueOf(i-1)))){
+                String className = university.getClassByIndex(Integer.valueOf(i-1));
+                System.out.println("\nInformacion sobre la clase seleccionada:\n");
+                System.out.println(university.getClassInfo(className));
+            }
+        }
+    }
 
 
     // Input verification

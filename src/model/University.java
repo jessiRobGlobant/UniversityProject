@@ -55,10 +55,15 @@ public class University {
         short i = 1;
         for (long id: class1.getStudents()){
             ans += String.format("\n%d\n\t%s", i, getStudentInfo(id));
+            i ++;
         }
         
         return ans;
     }
+
+    public String getClassByIndex(int index){
+        return getClassesNames().get(index);
+    }    
 
     
     
