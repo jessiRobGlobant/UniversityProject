@@ -1,6 +1,9 @@
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Student;
+import model.Class;
 import model.University;
 
 public class UniversityInterface {
@@ -39,8 +42,10 @@ public class UniversityInterface {
                         showStudents();
                         break;
                     case 4: 
+                        createStudent();
                         break;
                     case 5: 
+                        createClass();
                         break;
                     case 6: 
                         break;
@@ -95,6 +100,64 @@ public class UniversityInterface {
         }
     }
 
+    // Create objects
+    public static void createStudent(){
+        System.out.println("\nCREAR ESTUDIANTE\n");
+
+        System.out.println("Ingrese el nombre:");
+        String name = scan.nextLine();
+        System.out.println("Ingrese la edad:");
+        String age = scan.nextLine();
+
+        if ((isName(name)) && (isInt(age))){
+            Student student = university.createStudent(name, Byte.valueOf(age));
+            System.out.println("\nNuevo estudiante creado con exito\n");
+            System.out.println(student.info());
+        }
+    }
+
+    public static void createClass(){
+        System.out.println("\nCREAR CLASE\n");
+
+        System.out.println("Ingrese el nombre:");
+        String name = scan.nextLine();
+        System.out.println("Ingrese el salon:");
+        String classroom = scan.nextLine();
+        System.out.println("Ingrese el id del profesor:");
+        String professorId = scan.nextLine();
+        System.out.println("Ingrese los ids de los estudiantes separados por ',' y sin espacios:");
+        String[] studentsIds = scan.nextLine().split(",");
+
+        if ((isInt(professorId))){
+            // Verificate all students
+            short i = 0;
+            boolean validIds = true;
+            List<Long> studentsIdList = new LinkedList<>();
+
+            while ((i<studentsIds.length) && (validIds)){
+                String studentId = studentsIds[i];
+                if (isInt(studentId)){
+                    studentsIdList.add(Long.valueOf(studentId));
+                }
+                else{
+                    validIds = false;
+                }
+                i++;
+            }
+
+            if (validIds){
+                Class class1 = university.createClass(name, classroom, 
+                                    Long.parseLong(professorId), studentsIdList);
+                if (class1 != null){
+                    System.out.println("\nClase creada con exito\n\n");
+                    System.out.println(university.getClassInfo(class1.getName())); 
+                }
+                else{
+                    System.out.println("\nUno o más ids no se encuentran registrados");
+                }
+            }
+        }
+    }
 
     // Input verification
     public static boolean isAnOption(String option, String maxOption){
@@ -132,18 +195,20 @@ public class UniversityInterface {
             return true;
         }
         else{
-            System.out.println("\nNo se ingresó una cantidad valida");
+            System.out.println("\nNo se ingresó una entero valido");
             return false;
         }
 
     }
 
-    public static boolean isAlphabetical(String text){
-        boolean isAlpha = text.matches("\\w*");
-        if(isAlpha){
-            System.out.println("\n La entrada ingresada no es un nombre valido.");
+    public static boolean isName(String text){
+        // [A-Za-z]+ -> Begining with at least a letter
+        // (\\s[A-Za-z]+)* -> Zero or more occurences of a space followed by one or more lettters
+        boolean isName = text.matches("[A-Za-z]+(\\s[A-Za-z]+)*");
+        if(!isName){
+            System.out.println("\nLa entrada ingresada no es un nombre valido.");
         }
-        return isAlpha;
+        return isName;
     }
 
     // Main

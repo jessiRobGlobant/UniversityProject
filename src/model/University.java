@@ -50,7 +50,7 @@ public class University {
         Student stud3 = createStudent("Luisa", (byte)21);
         Student stud4 = createStudent("Maria Paula", (byte)20);
         Student stud5 = createStudent("Sebastian", (byte)17);
-        Student stud6 = createStudent("Martina", (byte)7);
+        Student stud6 = createStudent("Martina", (byte)16);
 
         // Create classes
         List<Long> students = new LinkedList<>();

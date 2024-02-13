@@ -43,7 +43,7 @@ public abstract class Professor {
 
     // Display info
     public String info(){
-        return String.format("Id: %d\nNombre: %s\nSalario: %.2f", 
+        return String.format("Id: %d\nNombre: %s\nSalario: $%.2f", 
                     this.id, this.name, this.salary);
     }
 
