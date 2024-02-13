@@ -13,7 +13,6 @@ public abstract class Professor {
     public Professor(String name) {
         this.id = count;
         this.name = name;
-        calculateSalary();
         count ++;
     }
 
@@ -44,7 +43,7 @@ public abstract class Professor {
 
     // Display info
     public String info(){
-        return String.format("Id: %d\nNombre: %s\nSalario: %.2f\nAños de experiencia: %d", 
+        return String.format("Id: %d\nNombre: %s\nSalario: %.2f", 
                     this.id, this.name, this.salary);
     }
 

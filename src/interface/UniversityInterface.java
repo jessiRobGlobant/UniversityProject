@@ -55,10 +55,10 @@ public class UniversityInterface {
         List<Long> professorsIds = university.getTeachersIds();
         short i = 0;
         for (long id: professorsIds){
+            i ++;
             System.out.println(i);
             System.out.println(university.getProfessorInfo(id));
             System.out.println();
-            i ++;
         }
     }
 
@@ -67,10 +67,10 @@ public class UniversityInterface {
         List<Long> studentsIds = university.getStudentsIds();
         short i = 0;
         for (long id: studentsIds){
+            i ++;
             System.out.println(i);
             System.out.println(university.getStudentInfo(id));
             System.out.println();
-            i ++;
         }
     }
 
@@ -87,8 +87,8 @@ public class UniversityInterface {
             System.out.println("Ingrese la clase de la que desea ver más informacion:");
             String option = scan.nextLine();
 
-            if(isAnOption(option, String.valueOf(String.valueOf(i-1)))){
-                String className = university.getClassByIndex(Integer.valueOf(i-1));
+            if(isAnOption(option, String.valueOf(i))){
+                String className = university.getClassByIndex(Integer.valueOf(option)-1);
                 System.out.println("\nInformacion sobre la clase seleccionada:\n");
                 System.out.println(university.getClassInfo(className));
             }
