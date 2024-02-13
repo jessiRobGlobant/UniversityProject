@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +20,7 @@ public class University {
 
     // Constructor
     public University() {
-        // TODO - Create teachers
-        // TODO - Create Default objects
+        defaultObjects();
     }
 
     // Getters
@@ -35,13 +36,71 @@ public class University {
         return classesNames;
     }
 
+    // Create objects
+    private void defaultObjects(){
+
+    }
+
+    public Student createStudent(String name, byte age){
+        Student student  = new Student(name, age);
+        studentsIds.add(student.getId());
+        students.put(student.getId(), student);
+        return student;
+    }
+
+    public Professor createProfesor(String name, byte hoursExpYears, boolean partTime){ 
+        /** HoursExpYears can be experienceYears or hoursPerWeek, depending
+         * on the professor type
+        **/
+        Professor professor;
+        if (partTime){
+            professor = new PartTimeProfessor(name, hoursExpYears);
+        }
+        else{
+            professor = new FullTimeProfessor(name, hoursExpYears);
+        }
+        teachersIds.add(professor.getId());
+        teachers.put(professor.getId(), professor);
+        return professor;
+    }
+
+    public Class createClass(String name, String classroom, long professorId, List<Long> students){
+        Class class1 = null;
+        if(getProfessor(professorId) != null){
+
+            boolean missingStudent = false;
+            Long studentIt;
+            Iterator<Long> iterator = students.iterator();
+
+            while ((iterator.hasNext()) && (!missingStudent)){
+                studentIt = iterator.next();
+                if (getStudent(studentIt) == null){
+                    missingStudent = true;
+                }
+            }
+
+            if (!missingStudent){
+                class1 = new Class(name, classroom, professorId, students);
+            }
+        }
+        return class1;
+    }
+
     // Get info
+    private Professor getProfessor(long id){
+        return teachers.get(id);
+    }
+
     public String getProfessorInfo(long id){
-        return teachers.get(id).info();
+        return getProfessor(id).info();
+    }
+
+    private Student getStudent(long id){
+        return students.get(id);
     }
 
     public String getStudentInfo(long id){
-        return students.get(id).info();
+        return getStudent(id).info();
     }
 
     public String getClassInfo(String name){

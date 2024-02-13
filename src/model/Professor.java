@@ -22,6 +22,10 @@ public abstract class Professor {
         return name;
     }
 
+    protected long getId() {
+        return id;
+    }
+
     protected void setName(String name) {
         this.name = name;
     }
