@@ -7,6 +7,7 @@ public class FullTimeProfessor extends Professor{
     public FullTimeProfessor(String name, byte experienceYears) {
         super(name);
         this.experienceYears = experienceYears;
+        calculateSalary();
     }
 
     protected byte getExperienceYears() {
@@ -24,7 +25,7 @@ public class FullTimeProfessor extends Professor{
 
     @Override
     public String info(){
-        return String.format("%s\nHoras de experiencia: %d",
+        return String.format("%s\nTipo de contrato: tiempo completo\nAños de experiencia: %d",
                             super.info(), getExperienceYears());
     }
     

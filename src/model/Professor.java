@@ -13,13 +13,16 @@ public abstract class Professor {
     public Professor(String name) {
         this.id = count;
         this.name = name;
-        calculateSalary();
         count ++;
     }
 
     // Getters and Setters
     protected String getName() {
         return name;
+    }
+
+    protected long getId() {
+        return id;
     }
 
     protected void setName(String name) {
@@ -40,7 +43,7 @@ public abstract class Professor {
 
     // Display info
     public String info(){
-        return String.format("Id: %d\nNombre: %s\nSalario: %.2f\nAños de experiencia: %d", 
+        return String.format("Id: %d\nNombre: %s\nSalario: $%.2f", 
                     this.id, this.name, this.salary);
     }
 

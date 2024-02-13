@@ -7,6 +7,7 @@ public class PartTimeProfessor extends Professor{
     public PartTimeProfessor(String name, byte activeHoursPerWeek) {
         super(name);
         this.activeHoursPerWeek = activeHoursPerWeek;
+        calculateSalary();
     }
 
     // Getters and Setters
@@ -25,7 +26,7 @@ public class PartTimeProfessor extends Professor{
 
     @Override
     public String info(){
-        return String.format("%s\nHoras de experiencia: %d",super.info(), getActiveHoursPerWeek());
+        return String.format("%s\nTipo de contrato: medio tiempo\nHoras por semana: %d",super.info(), getActiveHoursPerWeek());
     }
 
 }
