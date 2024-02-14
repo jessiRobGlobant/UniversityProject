@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Professor {
+public abstract class Professor implements UniversityMember{
     
     // Attributes
     private long id;
@@ -17,11 +17,13 @@ public abstract class Professor {
     }
 
     // Getters and Setters
-    protected String getName() {
+    @Override
+    public String getName() {
         return name;
     }
 
-    protected long getId() {
+    @Override
+    public long getId() {
         return id;
     }
 

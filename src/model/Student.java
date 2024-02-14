@@ -1,6 +1,6 @@
 package model;
 
-public class Student {
+public class Student implements UniversityMember{
     
     // Atributes
     private long id;
@@ -17,8 +17,14 @@ public class Student {
     }
 
     // Getters and Setters
-    protected String getName() {
+    @Override
+    public String getName() {
         return name;
+    }
+
+    @Override
+    public long getId() {
+        return id;
     }
 
     protected void setName(String name) {
@@ -33,9 +39,6 @@ public class Student {
         this.age = age;
     }
 
-    protected long getId() {
-        return id;
-    }
 
     // Display info
     public String info(){
