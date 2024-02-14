@@ -43,7 +43,11 @@ public class Class {
     }
     
     public void addStudents(Set<Long> newStudents){
-        this.students.addAll(newStudents);
+        getStudents().addAll(newStudents);
+    }
+
+    public boolean searchStudent(Long stuentId){
+        return getStudents().contains(stuentId);
     }
 
     // Display info
