@@ -15,6 +15,8 @@ public class UniversityInterface {
     private static final Scanner scan = new Scanner(System.in);
     private static final University university = new University();
 
+    // Default constructor
+    
     // Main menu
     public static void mainMenu(){
         System.out.println("Bienvenido a tu programa universitario :) \n");
@@ -183,6 +185,9 @@ public class UniversityInterface {
     }
 
     public static Set<Long> validateStudents(final String[] studentsIds){
+        /*Function used to validate if the students in list are
+         * ids(number)
+         */
         short i = 0;
         boolean validIds = true;
         Set<Long> studentsIdList = new HashSet<>();

@@ -28,7 +28,7 @@ public abstract class Professor implements UniversityMember{
     }
 
     /* All classes can see the info, but only in the same package 
-    the apps can be changed, only members of the package 
+    the class can be changed, only members of the package 
     could do it (likely University class)*/ 
     protected void setName(String name) {
         this.name = name;
