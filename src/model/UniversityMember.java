@@ -1,3 +1,5 @@
+/* Class implemented by memebers of the university as 
+professors or students */ 
 package model;
 
 public interface UniversityMember {

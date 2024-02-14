@@ -3,7 +3,7 @@ package model;
 public abstract class Professor implements UniversityMember{
     
     // Attributes
-    private long id;
+    private final long id;
     private String name;
     private double salary;
     private static final double baseSalary = 1000;
@@ -27,11 +27,14 @@ public abstract class Professor implements UniversityMember{
         return id;
     }
 
+    /* All classes can see the info, but only in the same package 
+    the apps can be changed, only members of the package 
+    could do it (likely University class)*/ 
     protected void setName(String name) {
         this.name = name;
     }
 
-    protected double getSalary() {
+    public double getSalary() {
         return salary;
     }
 
@@ -46,7 +49,7 @@ public abstract class Professor implements UniversityMember{
     // Display info
     public String info(){
         return String.format("Id: %d\nNombre: %s\nSalario: $%.2f", 
-                    this.id, this.name, this.salary);
+                    getId(), getName(), getSalary());
     }
 
     protected abstract void calculateSalary();

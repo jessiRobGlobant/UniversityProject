@@ -3,7 +3,7 @@ package model;
 public class Student implements UniversityMember{
     
     // Atributes
-    private long id;
+    private final long id;
     private String name;
     private byte age;
     private static int count = 1;
@@ -31,7 +31,7 @@ public class Student implements UniversityMember{
         this.name = name;
     }
 
-    protected byte getAge() {
+    public byte getAge() {
         return age;
     }
 

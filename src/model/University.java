@@ -38,6 +38,18 @@ public class University {
         return classesNames;
     }
 
+    public Map<Long, Professor> getTeachers() {
+        return teachers;
+    }
+
+    public Map<Long, Student> getStudents() {
+        return students;
+    }
+
+    public Map<String, Class> getClasses() {
+        return classes;
+    }
+
     // Create objects
     private void defaultObjects(){
 
@@ -80,8 +92,8 @@ public class University {
 
     public Student createStudent(String name, byte age){
         Student student  = new Student(name, age);
-        studentsIds.add(student.getId());
-        students.put(student.getId(), student);
+        getStudentsIds().add(student.getId());
+        getStudents().put(student.getId(), student);
         return student;
     }
 
@@ -96,26 +108,31 @@ public class University {
         else{
             professor = new FullTimeProfessor(name, hoursExpYears);
         }
-        teachersIds.add(professor.getId());
-        teachers.put(professor.getId(), professor);
+        getTeachersIds().add(professor.getId());
+        getTeachers().put(professor.getId(), professor);
         return professor;
     }
 
     public Class createClass(String name, String classroom, long professorId, Set<Long> students){
         Class class1 = null;
-        if((getProfessor(professorId) != null) && (!classes.containsKey(name))){
+        if((getProfessor(professorId) != null) && (!getClasses().containsKey(name))){
             // If students exist, create the class with them
             if (verifyStudents(students)){
                 class1 = new Class(name, classroom, professorId, students);
-                classes.put(name, class1);
-                classesNames.add(name);
+                getClasses().put(name, class1);
+                getClassesNames().add(name);
             }
         }
         return class1;
     }
 
     // Get info
-    private Professor getProfessor(long id){
+    /*
+     * Note: Getters are defined as public, beacuse although some are only used 
+     * in this class, in the future could be used in the interface to add other
+     * functionalities
+     */
+    public Professor getProfessor(long id){
         return teachers.get(id);
     }
 
@@ -123,7 +140,7 @@ public class University {
         return getProfessor(id).info();
     }
 
-    private Student getStudent(long id){
+    public Student getStudent(long id){
         return students.get(id);
     }
 
@@ -132,7 +149,7 @@ public class University {
     }
 
     public Class getClass(String name){
-        return this.classes.get(name);
+        return getClasses().get(name);
     }
 
     public String getClassInfo(String name){

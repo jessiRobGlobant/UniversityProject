@@ -1,3 +1,5 @@
+/* Class used to control the inputs and outputs of the user via console */ 
+package UniversityInterface;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -33,7 +35,7 @@ public class UniversityInterface {
 
             option = scan.nextLine();
 
-            if (isAnOption(option, "7")){
+            if (isAnOption(option,"0", "7")){
                 switch (Byte.parseByte(option)) {
                     case 1: 
                         showProfessors();
@@ -64,9 +66,9 @@ public class UniversityInterface {
     // Show info
     public static void showProfessors(){
         System.out.println("\nLISTADO DE PROFESORES\n");
-        List<Long> professorsIds = university.getTeachersIds();
+        final List<Long> professorsIds = university.getTeachersIds();
         short i = 0;
-        for (long id: professorsIds){
+        for (final long id: professorsIds){
             i ++;
             System.out.println(i);
             System.out.println(university.getProfessorInfo(id));
@@ -76,9 +78,9 @@ public class UniversityInterface {
 
     public static void showStudents(){
         System.out.println("\nLISTADO DE ESTUDIANTES\n");
-        List<Long> studentsIds = university.getStudentsIds();
+        final List<Long> studentsIds = university.getStudentsIds();
         short i = 0;
-        for (long id: studentsIds){
+        for (final long id: studentsIds){
             i ++;
             System.out.println(i);
             System.out.println(university.getStudentInfo(id));
@@ -90,17 +92,17 @@ public class UniversityInterface {
         System.out.println("\nLISTADO DE CLASES\n");
 
         int i  = 0;
-        for (String name: university.getClassesNames()){
+        for (final String name: university.getClassesNames()){
             i ++;
             System.out.println(String.format("%d. %s", i, name));
         }
         
         if (!university.getClassesNames().isEmpty()){
             System.out.println("Ingrese la clase de la que desea ver más informacion:");
-            String option = scan.nextLine();
+            final String option = scan.nextLine();
 
-            if(isAnOption(option, String.valueOf(i))){
-                String className = university.getClassByIndex(Integer.valueOf(option)-1);
+            if(isAnOption(option,"1", String.valueOf(i))){
+                final String className = university.getClassByIndex(Integer.valueOf(option)-1);
                 System.out.println("\nInformacion sobre la clase seleccionada:\n");
                 System.out.println(university.getClassInfo(className));
             }
@@ -112,12 +114,12 @@ public class UniversityInterface {
         System.out.println("\nCREAR ESTUDIANTE\n");
 
         System.out.println("Ingrese el nombre:");
-        String name = scan.nextLine();
+        final String name = scan.nextLine();
         System.out.println("Ingrese la edad:");
-        String age = scan.nextLine();
+        final String age = scan.nextLine();
 
         if ((isName(name)) && (isInt(age))){
-            Student student = university.createStudent(name, Byte.valueOf(age));
+            final Student student = university.createStudent(name, Byte.valueOf(age));
             System.out.println("\nNuevo estudiante creado con exito\n");
             System.out.println(student.info());
         }
@@ -127,26 +129,26 @@ public class UniversityInterface {
         System.out.println("\nCREAR CLASE\n");
 
         System.out.println("Ingrese el nombre:");
-        String name = scan.nextLine();
+        final String name = scan.nextLine();
         System.out.println("Ingrese el salon:");
-        String classroom = scan.nextLine();
+        final String classroom = scan.nextLine();
         System.out.println("Ingrese el id del profesor:");
-        String professorId = scan.nextLine();
+        final String professorId = scan.nextLine();
         System.out.println("Ingrese los ids de los estudiantes separados por ',' y sin espacios:");
-        String[] studentsIds = scan.nextLine().split(",");
+        final String[] studentsIds = scan.nextLine().split(",");
 
         if ((isInt(professorId))){
-            Set<Long> studentsIdList = validateStudents(studentsIds);
+            final Set<Long> studentsIdList = validateStudents(studentsIds);
             // If the ids are valid, create the class
             if (!studentsIdList.isEmpty()){
-                Class class1 = university.createClass(name, classroom, 
+                final Class class1 = university.createClass(name, classroom, 
                                     Long.parseLong(professorId), studentsIdList);
                 if (class1 != null){
                     System.out.println("\nClase creada con exito\n\n");
                     System.out.println(university.getClassInfo(class1.getName())); 
                 }
                 else{
-                    System.out.println("\nUno o más ids no se encuentran registrados");
+                    System.out.println("\nNo se ha podido crear la clase. Uno o más ids no se encuentran registrados o puede que la clase con ese nombre ya exista");
                 }
             }
         }
@@ -157,21 +159,21 @@ public class UniversityInterface {
         System.out.println("\nAÑADIR ESTUDIANTES A UNA CLASE\n");
 
         System.out.println("Ingrese los ids de los estudiantes separados por ',' y sin espacios:");
-        String[] studentsIds = scan.nextLine().split(",");
+        final String[] studentsIds = scan.nextLine().split(",");
         System.out.println("Ingrese la clase:");
-        String className = scan.nextLine();
+        final String className = scan.nextLine();
 
-        Set<Long> studentsIdList = validateStudents(studentsIds);
+        final Set<Long> studentsIdList = validateStudents(studentsIds);
         // If the ids are valid, add them to the class
         if (!studentsIdList.isEmpty()){
-            Class class1 = university.getClass(className);
+            final Class class1 = university.getClass(className);
             if (class1 != null){
                 if (university.addStudentsToClass(studentsIdList, class1)){
                     System.out.println("\nEstudiantes añadidos con exito\n\n");
                     System.out.println(university.getClassInfo(class1.getName())); 
                 }
                 else{
-                    System.out.println("\nuno o más Ids no están registrados");
+                    System.out.println("\nUno o más Ids no están registrados");
                 }
             }
             else{
@@ -180,7 +182,7 @@ public class UniversityInterface {
         }
     }
 
-    public static Set<Long> validateStudents(String[] studentsIds){
+    public static Set<Long> validateStudents(final String[] studentsIds){
         short i = 0;
         boolean validIds = true;
         Set<Long> studentsIdList = new HashSet<>();
@@ -209,20 +211,20 @@ public class UniversityInterface {
         System.out.println("\nCONOCER CLASES DE UN ESTUDIANTE\n");
 
         System.out.println("Ingrese el id del estudiante:");
-        String studentId = scan.nextLine();
+        final String studentId = scan.nextLine();
 
         if (isInt(studentId)){
-            List<String> classes = university.getStudentClasses(Long.parseLong(studentId));
+            final List<String> classes = university.getStudentClasses(Long.parseLong(studentId));
             if(!classes.isEmpty()){
                 System.out.println("\nEl estudiante se encuentra en las siguientes clases:");
                 int i = 0;
-                for (String class1: classes){
+                for (final String class1: classes){
                     i ++;
                     System.out.println(String.format("%d. %s", i, class1));
                 }
             }
             else{
-                System.out.println("\nEl estudiante no se encuentra en ninguna clase");
+                System.out.println("\nEl id del estudiante no se encuentra registrado en ninguna clase");
             }
         }
         else{
@@ -231,11 +233,11 @@ public class UniversityInterface {
     }
 
     // Input verification
-    public static boolean isAnOption(String option, String maxOption){
+    public static boolean isAnOption(final String option, final String minOption, final String maxOption){
 
-        String regexString = String.format("([0-%s])", maxOption);
+        final String regexString = String.format("([%s-%s])", minOption, maxOption);
 
-        boolean inOptions = option.matches(regexString);
+        final boolean inOptions = option.matches(regexString);
         if (inOptions){
             return true;
         }
@@ -246,9 +248,9 @@ public class UniversityInterface {
 
     }
 
-    public static boolean isPrice(String price){
+    public static boolean isPrice(final String price){
 
-        boolean isPrice = price.matches("(\\d)*\\.?\\d+");
+        final boolean isPrice = price.matches("(\\d)*\\.?\\d+");
         if (isPrice){
             return true;
         }
@@ -259,9 +261,9 @@ public class UniversityInterface {
 
     }
     
-    public static boolean isInt(String integer){
+    public static boolean isInt(final String integer){
 
-        boolean isInteger = integer.matches("(\\d)+");
+        final boolean isInteger = integer.matches("(\\d)+");
         if (isInteger){
             return true;
         }
@@ -272,10 +274,10 @@ public class UniversityInterface {
 
     }
 
-    public static boolean isName(String text){
+    public static boolean isName(final String text){
         // [A-Za-z]+ -> Begining with at least a letter
         // (\\s[A-Za-z]+)* -> Zero or more occurences of a space followed by one or more lettters
-        boolean isName = text.matches("[A-Za-z]+(\\s[A-Za-z]+)*");
+        final boolean isName = text.matches("[A-Za-z]+(\\s[A-Za-z]+)*");
         if(!isName){
             System.out.println("\nLa entrada ingresada no es un nombre valido.");
         }

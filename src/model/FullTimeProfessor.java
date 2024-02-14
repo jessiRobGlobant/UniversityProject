@@ -10,7 +10,7 @@ public class FullTimeProfessor extends Professor{
         calculateSalary();
     }
 
-    protected byte getExperienceYears() {
+    public byte getExperienceYears() {
         return experienceYears;
     }
 

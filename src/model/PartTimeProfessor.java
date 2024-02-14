@@ -11,7 +11,7 @@ public class PartTimeProfessor extends Professor{
     }
 
     // Getters and Setters
-    protected byte getActiveHoursPerWeek() {
+    public byte getActiveHoursPerWeek() {
         return activeHoursPerWeek;
     }
 
