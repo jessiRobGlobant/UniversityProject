@@ -4,8 +4,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 import model.Student;
-import model.Class;
 import model.University;
+import model.Class;
 
 public class UniversityInterface {
 
@@ -15,6 +15,7 @@ public class UniversityInterface {
 
     // Main menu
     public static void mainMenu(){
+        System.out.println("Bienvenido a tu programa universitario :) \n");
         String option = "";
         while (!option.equals("0")){
             System.out.println("\nMENU PRINCIPAL\n");
@@ -279,13 +280,5 @@ public class UniversityInterface {
             System.out.println("\nLa entrada ingresada no es un nombre valido.");
         }
         return isName;
-    }
-
-    // Main
-    public static void main(String[] args) {
-        
-        System.out.println("Bienvenido a tu programa universitario :) \n");
-        // Excecute main menu
-        mainMenu();
     }
 }
