@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -185,6 +186,15 @@ public class University {
         return !missingStudent;
     }
     
-    
+    // Get student classes
+    public List<String> getStudentClasses(long id){
+        List<String> studClasses = new LinkedList<>();
+        for (String className: classesNames){
+            if (getClass(className).searchStudent(id)){
+                studClasses.add((className));
+            }
+        }
+        return studClasses;
+    }
     
 }
