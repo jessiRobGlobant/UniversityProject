@@ -53,6 +53,7 @@ public class UniversityInterface {
                         addStudentsToClass();
                         break;
                     case 7: 
+                        listStudClasses();
                         break;
                 }
             }
@@ -200,6 +201,32 @@ public class UniversityInterface {
             System.out.println("El id "+studentId+"no es valido");
         }
         return studentsIdList;
+    }
+
+    // List student classes
+    public static void listStudClasses() {
+        System.out.println("\nCONOCER CLASES DE UN ESTUDIANTE\n");
+
+        System.out.println("Ingrese el id del estudiante:");
+        String studentId = scan.nextLine();
+
+        if (isInt(studentId)){
+            List<String> classes = university.getStudentClasses(Long.parseLong(studentId));
+            if(!classes.isEmpty()){
+                System.out.println("\nEl estudiante se encuentra en las siguientes clases:");
+                int i = 0;
+                for (String class1: classes){
+                    i ++;
+                    System.out.println(String.format("%d. %s", i, class1));
+                }
+            }
+            else{
+                System.out.println("\nEl estudiante no se encuentra en ninguna clase");
+            }
+        }
+        else{
+            System.out.println("El id "+studentId+"no es valido");
+        }
     }
 
     // Input verification
