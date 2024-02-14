@@ -2,10 +2,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class University {
 
@@ -53,23 +54,23 @@ public class University {
         Student stud6 = createStudent("Martina", (byte)16);
 
         // Create classes
-        List<Long> students = new LinkedList<>();
+        Set<Long> students = new HashSet<>();
         students.add(stud1.getId());
         students.add(stud3.getId());
         students.add(stud4.getId());
         createClass("Java Introduction", "virtual", prof1.getId(), students);
 
-        students = new LinkedList<>();
+        students = new HashSet<>();
         students.add(stud1.getId());
         students.add(stud5.getId());
         students.add(stud4.getId());
         createClass("IP", "AU403", prof2.getId(), students);
 
-        students = new LinkedList<>();
+        students = new HashSet<>();
         students.add(stud2.getId());
         createClass("Typescript", "virtual", prof1.getId(), students);
 
-        students = new LinkedList<>();
+        students = new HashSet<>();
         students.add(stud6.getId());
         students.add(stud5.getId());
         createClass("Precalculo", "R202", prof3.getId(), students);
@@ -99,22 +100,11 @@ public class University {
         return professor;
     }
 
-    public Class createClass(String name, String classroom, long professorId, List<Long> students){
+    public Class createClass(String name, String classroom, long professorId, Set<Long> students){
         Class class1 = null;
         if((getProfessor(professorId) != null) && (!classes.containsKey(name))){
-
-            boolean missingStudent = false;
-            Long studentIt;
-            Iterator<Long> iterator = students.iterator();
-
-            while ((iterator.hasNext()) && (!missingStudent)){
-                studentIt = iterator.next();
-                if (getStudent(studentIt) == null){
-                    missingStudent = true;
-                }
-            }
-
-            if (!missingStudent){
+            // If students exist, create the class with them
+            if (verifyStudents(students)){
                 class1 = new Class(name, classroom, professorId, students);
                 classes.put(name, class1);
                 classesNames.add(name);
@@ -140,8 +130,12 @@ public class University {
         return getStudent(id).info();
     }
 
+    public Class getClass(String name){
+        return this.classes.get(name);
+    }
+
     public String getClassInfo(String name){
-        Class class1 = classes.get(name);
+        Class class1 = getClass(name);
         String ans = class1.info();
 
         // Get teacher info
@@ -158,10 +152,38 @@ public class University {
     }
 
     public String getClassByIndex(int index){
-        System.out.println(getClassesNames().get(index));
         return getClassesNames().get(index);
     }    
 
+    // Add students to class
+    public boolean addStudentsToClass(Set<Long> studentsId, Class class1){
+        if (verifyStudents(studentsId)){
+            Set<Long> students = new HashSet<>();
+            for (Long studentId: studentsId){
+                students.add(studentId);
+            }
+            class1.addStudents(students);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean verifyStudents(Set<Long> students){
+        /** Verifies if the ids of the students are in the 
+         * university**/ 
+        boolean missingStudent = false;
+        Long studentIt;
+        Iterator<Long> iterator = students.iterator();
+
+        while ((iterator.hasNext()) && (!missingStudent)){
+            studentIt = iterator.next();
+            if (getStudent(studentIt) == null){
+                missingStudent = true;
+            }
+        }
+
+        return !missingStudent;
+    }
     
     
     

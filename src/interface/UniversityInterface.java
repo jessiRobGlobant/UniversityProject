@@ -1,6 +1,7 @@
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import model.Student;
 import model.Class;
@@ -23,14 +24,15 @@ public class UniversityInterface {
             System.out.println("3. Ver estudiantes");
             System.out.println("4. Crear nuevo estudiante");
             System.out.println("5. Crear nueva clase");
-            System.out.println("6. Listar clases de un estudiante");
+            System.out.println("6. Añadir estudiantes a clase");
+            System.out.println("7. Listar clases de un estudiante");
             System.out.println("0. Salir de la aplicacion");
 
             System.out.println("\nSeleccione la accion que desea realizar:");
 
             option = scan.nextLine();
 
-            if (isAnOption(option, "6")){
+            if (isAnOption(option, "7")){
                 switch (Byte.parseByte(option)) {
                     case 1: 
                         showProfessors();
@@ -48,6 +50,9 @@ public class UniversityInterface {
                         createClass();
                         break;
                     case 6: 
+                        addStudentsToClass();
+                        break;
+                    case 7: 
                         break;
                 }
             }
@@ -129,23 +134,9 @@ public class UniversityInterface {
         String[] studentsIds = scan.nextLine().split(",");
 
         if ((isInt(professorId))){
-            // Verificate all students
-            short i = 0;
-            boolean validIds = true;
-            List<Long> studentsIdList = new LinkedList<>();
-
-            while ((i<studentsIds.length) && (validIds)){
-                String studentId = studentsIds[i];
-                if (isInt(studentId)){
-                    studentsIdList.add(Long.valueOf(studentId));
-                }
-                else{
-                    validIds = false;
-                }
-                i++;
-            }
-
-            if (validIds){
+            Set<Long> studentsIdList = validateStudents(studentsIds);
+            // If the ids are valid, create the class
+            if (!studentsIdList.isEmpty()){
                 Class class1 = university.createClass(name, classroom, 
                                     Long.parseLong(professorId), studentsIdList);
                 if (class1 != null){
@@ -157,6 +148,58 @@ public class UniversityInterface {
                 }
             }
         }
+    }
+
+    // Add student to class
+    public static void addStudentsToClass(){
+        System.out.println("\nAÑADIR ESTUDIANTES A UNA CLASE\n");
+
+        System.out.println("Ingrese los ids de los estudiantes separados por ',' y sin espacios:");
+        String[] studentsIds = scan.nextLine().split(",");
+        System.out.println("Ingrese la clase:");
+        String className = scan.nextLine();
+
+        Set<Long> studentsIdList = validateStudents(studentsIds);
+        // If the ids are valid, add them to the class
+        if (!studentsIdList.isEmpty()){
+            Class class1 = university.getClass(className);
+            if (class1 != null){
+                if (university.addStudentsToClass(studentsIdList, class1)){
+                    System.out.println("\nEstudiantes añadidos con exito\n\n");
+                    System.out.println(university.getClassInfo(class1.getName())); 
+                }
+                else{
+                    System.out.println("\nuno o más Ids no están registrados");
+                }
+            }
+            else{
+                System.out.println("\nLa clase no se encuentra registrada");
+            }
+        }
+    }
+
+    public static Set<Long> validateStudents(String[] studentsIds){
+        short i = 0;
+        boolean validIds = true;
+        Set<Long> studentsIdList = new HashSet<>();
+        String studentId = "";
+
+        while ((i<studentsIds.length) && (validIds)){
+            studentId = studentsIds[i];
+            if (isInt(studentId)){
+                studentsIdList.add(Long.valueOf(studentId));
+            }
+            else{
+                validIds = false;
+            }
+            i++;
+        }
+        if (!validIds){
+            // Return empty list if not valid ids
+            studentsIdList = new HashSet<>();
+            System.out.println("El id "+studentId+"no es valido");
+        }
+        return studentsIdList;
     }
 
     // Input verification

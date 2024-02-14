@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Class {
     
@@ -9,10 +9,10 @@ public class Class {
     private String name;
     private String classroom;
     private long teacher;
-    private List<Long> students = new ArrayList<>();
+    private Set<Long> students = new HashSet<>();
 
     // Constructor
-    public Class(String name, String classroom, long teacher, List<Long> students) {
+    public Class(String name, String classroom, long teacher, Set<Long> students) {
         this.name = name;
         this.classroom = classroom;
         this.teacher = teacher;
@@ -38,11 +38,12 @@ public class Class {
     public void setTeacher(long teacher) {
         this.teacher = teacher;
     }
-    public List<Long> getStudents() {
+    public Set<Long> getStudents() {
         return students;
     }
-    public void setStudents(List<Long> students) {
-        this.students = students;
+    
+    public void addStudents(Set<Long> newStudents){
+        this.students.addAll(newStudents);
     }
 
     // Display info
