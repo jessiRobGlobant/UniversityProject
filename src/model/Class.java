@@ -9,7 +9,7 @@ public class Class {
     private String name;
     private String classroom;
     private long teacher;
-    private Set<Long> students = new HashSet<>();
+    private Set<Long> students = new HashSet<>(); //Used a set to avoid repetition of students
 
     // Constructor
     public Class(String name, String classroom, long teacher, Set<Long> students) {
